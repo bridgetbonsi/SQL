@@ -78,3 +78,61 @@ SELECT department, AVG(salary) AS avg_salary
 FROM employees
 GROUP BY department
 HAVING avg_salary >= 70000.00;
+
+SQL Challenge: Salary Database Challenge
+1. Calculate how much is spent per year on the salaries for each department where the total spent on the salaries is at least $300,000. Your results table should include the department name and the total spent on salaries in that department
+
+SELECT department, SUM (salary) AS total_salary
+FROM employees
+GROUP BY department
+HAVING total_salary >= 300000.00
+
+2. Select all the departments that pay an average of at least $70,000 per year. Your results table should include the department and average salary for that department, and you should rename the average salary column using an alias. 
+
+SELECT department, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY department
+HAVING avg_salary >= 70000.00;
+
+SQL Challenge #6: Company Marathon Database Challenge
+
+1. Select every participant name and the percent of the marathon that they completed.
+
+SELECT participant_name,
+completion_fraction*100 as completion_percent
+FROM marathon
+
+-- Without using ROUND
+SELECT participant_name
+,completion_fraction*100 as completion_percent
+FROM marathon
+WHERE participant_name="Karamo Brown";
+
+-- Using ROUND
+SELECT participant_name
+,ROUND(completion_fraction*100) as completion_percent
+FROM marathon
+WHERE participant_name="Karamo Brown";
+
+-- Using ROUND and specifying how many decimals you want in your result
+SELECT participant_name
+,ROUND(completion_fraction*100,1) as completion_percent
+FROM marathon
+WHERE participant_name="Karamo Brown";
+
+2. Select every participant name and the percent of the marathon that they completed. Show the percent of the marathon completed rounded to one decimal place.
+SELECT participant_name,
+ROUND(completion_fraction*100, 1) AS completion_percent
+FROM marathon;
+
+3. Show how many employees completed each quarter of the marathon (75% or more, 50%, 25%, or under 25%).
+
+SELECT * 
+CASE WHEN completion_fraction >= .75 THEN '75%+'
+WHEN completion_fraction >= .50 THEN '50%+'
+WHEN completing >= .25 THEN '25%+' 
+ELSE 'Under 25%'
+END AS "quarter_completed"
+FROM marathon
+GROUP BY quarter_completed
+
